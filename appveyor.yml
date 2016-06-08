@@ -1,0 +1,16 @@
+environment:
+  matrix:
+    - MSYS2_ARCH: x86_64
+      MSYSTEM: MINGW64
+    - MSYS2_ARCH: i686
+      MSYSTEM: MINGW32
+
+install:
+  - set PATH=C:\msys64\%MSYSTEM%\bin;C:\msys64\usr\bin;%PATH%
+  - pacman --noconfirm --sync --refresh --refresh --sysupgrade --sysupgrade
+  - bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/appveyor.sh install"
+
+build_script:
+  - bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/appveyor.sh build"
+
+deploy: off
